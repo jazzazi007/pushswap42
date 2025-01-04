@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 /*void insertion_stack(t_stack* stack) { 
     if (!stack || stack->size < 2) 

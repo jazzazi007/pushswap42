@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "push_swap.h"
+#include "../include/push_swap.h"
 #include <unistd.h>
 
 bool is_sorted(t_stack *stack) {

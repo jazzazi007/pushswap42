@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 void sa(t_stack *stack_a) {
     if (!stack_a || stack_a->size < 2) {
