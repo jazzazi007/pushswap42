@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdbool.h>
+#include "../libft/libft.h"
+
 
 typedef struct s_node {
     int value;
