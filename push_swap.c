@@ -38,7 +38,7 @@ void ss(t_stack *stack_a, t_stack *stack_b)
 
 void pa(t_stack *stack_a, t_stack *stack_b)
 {
-    if (!stack_b->top || stack_b->size < 2)
+    if (!stack_b->top || stack_b->size < 1)
         return;
     t_node *new_node = create_node(stack_b->top->value);
     new_node->next = stack_a->top;

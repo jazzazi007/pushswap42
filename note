@@ -57,3 +57,34 @@ int main(int ac, char **av) {
 7322, 2539, 1647, 7278, 1167, 1488, 6455, 3755, 4941, 275, 2304, 9266, 7337, 3463, 3614, 
 8714, 307, 4364, 8523, 9533, 8471, 408, 5634, 551, 6915, 8690, 3505, 4483, 8259, 3924, 
 3767, 8256, 5177, 7691, 205, 9874, 2807, 2358, 2925, 1957, 2693, 1338, 6700, 929, 2731};
+
+
+
+/*void tiny_sort(t_stack *stack_a) {
+   if (stack_a->size != 3) {
+        printf("This function only sorts stacks of size 3.\n");
+        return;
+    }
+    // Sort the three elements
+    while (!is_sorted(stack_a))
+    {
+    printf("pre start\n");
+    int first = stack_a->top->value;
+    int second = stack_a->top->next->value;
+    int third = stack_a->top->next->next->next->value;
+    printf("start\n");
+    if (first > second) {
+        printf("start->next\n");
+        sa(stack_a); // Swap first and second
+        first = stack_a->top->value; // Update first after swap
+        second = stack_a->top->next->value; // Update second after swap
+    }
+    if (first > third) {
+        sa(stack_a); // Swap first and third
+    }
+    if (second > third) {
+        rra(stack_a); 
+    }}
+    
+}// Function to find the next smaller number in stack B for each node in stack A
+*/
