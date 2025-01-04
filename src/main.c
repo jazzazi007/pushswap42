@@ -125,7 +125,7 @@ void insertion_stack(t_stack* stack_a, t_stack* stack_b)
     print_stack(stack_a);
 }
 
-int main(int ac, char **av) {
+/*int main(int ac, char **av) {
 
     t_stack *stack_a = init_stack();
     t_stack *stack_b = init_stack();
@@ -154,12 +154,12 @@ int main(int ac, char **av) {
 
 
 
-    /*push(stack_a, 12);
+    push(stack_a, 12);
     push(stack_a, 11);
     push(stack_a, 13);
     push(stack_a, 5);
     push(stack_a, 20);
-    push(stack_a, 6); */
+    push(stack_a, 6); 
 
     printf("Befor:\n");
     print_stack(stack_a);
@@ -168,6 +168,7 @@ int main(int ac, char **av) {
 
     return 0;
 }}
+*/
 
 /*
 

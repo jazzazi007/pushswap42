@@ -2,13 +2,13 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC_DIR = src
 INC_DIR = include
-SRCS = $(SRC_DIR)/test.c $(SRC_DIR)/main.c $(SRC_DIR)/pushswap.c $(SRC_DIR)/ft_split.c
+SRCS = $(SRC_DIR)/test.c $(SRC_DIR)/main.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/ft_split.c
 
 OBJS = $(SRCS:.c=.o)
 
 NAME = pushswap.out
 
-HEADERS = $(INC_DIR)/pushswap.h
+HEADERS = $(INC_DIR)/push_swap.h
 
 LIBFT_DIR = libft
 
