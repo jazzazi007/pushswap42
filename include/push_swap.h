@@ -6,6 +6,7 @@
 #include <limits.h>
 #include <stdbool.h>
 #include "../42_libft/libft.h"
+#include "../42_printf/ft_printf.h"
 
 
 typedef struct s_node {
