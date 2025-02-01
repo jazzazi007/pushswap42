@@ -91,18 +91,19 @@ void tiny_sort(t_stack *stack_a, t_stack *stack_b) {
         if (stack_a->top == NULL || stack_a->top->next == NULL || stack_a->top->next->next == NULL) {
             return; // Safety check
         }
-        int first = stack_a->top->value;
+        /*int first = stack_a->top->value;
         int second = stack_a->top->next->value;
-        int third = stack_a->top->next->next->value;
-        if (set_targets_nodes(get_largest(stack_a), stack_b))
+        int third = stack_a->top->next->next->value;*/
+        /*if (set_targets_nodes(get_largest(stack_a), stack_b))
         {
         while (!is_sorted_inv(stack_a)){
+            
         if (first < second && first < third) 
         {
             ra(stack_a);
             printf("Performing ra\n");
         }
-        else if (second < first && second > third) 
+        else if (second < first && second < third) 
         {
             rra(stack_a);
             printf("Performing rra\n");
@@ -113,23 +114,26 @@ void tiny_sort(t_stack *stack_a, t_stack *stack_b) {
             printf("Performing sa\n");
         }}   
         }
-        else{
+        else{*/
         while (!is_sorted(stack_a)){
-        if (first > second && first > third) 
+            ft_printf("perform is sorted...\n");
+        if (stack_a->top->value > stack_a->top->next->value && stack_a->top->value > stack_a->top->next->next->value) 
         {
             ra(stack_a);
             printf("Performing ra\n");
         }
-        else if (second > first && second > third) 
+        else if (stack_a->top->next->value > stack_a->top->value && stack_a->top->next->value > stack_a->top->next->next->value) 
         {
             rra(stack_a);
             printf("Performing rra\n");
         }
-        if (first > second) 
+
+        if (stack_a->top->value > stack_a->top->next->value) 
         {
             sa(stack_a);
             printf("Performing sa\n");
-        }}
+        }
+        print_stack(stack_a);
         }
     }
     if (is_sorted_inv(stack_a) && is_sorted_inv(stack_b))
@@ -263,30 +267,25 @@ void startpush(t_stack *stack_a, t_stack *stack_b)
         pb(stack_a, stack_b);
         i++;
     }
-
-}
-void sort_stackb(t_stack *stack_b)
-{
-    if (stack_b->size < 1)
-        return;
-    t_node *current = stack_b->top;
-    t_node *next = current->next;
-    if (current->value < next->value)
-    {
+    if (stack_b->top->value < stack_b->top->next->value)
         sb(stack_b);
-    }
+
 }
 
-int main() {
+int main(int ac, char **av) {
     t_stack *stack_a = init_stack();
     t_stack *stack_b = init_stack();
     
     // Push three elements onto the stack
-    push(stack_a, 1);
-    push(stack_a, 40);
-    push(stack_a, 20);
-    push(stack_a, 50);
-    push(stack_a, 5);
+    if (ac < 2) {
+        ft_printf("Usage: %s <number> [number] [number] ...\n", av[0]);
+        return 1;
+    }
+    int i = 1;
+    while (av[i]) {
+        push(stack_a, atoi(av[i]));
+        i++;
+    }
     print_stack(stack_a);
     print_stack(stack_b);
     
@@ -294,7 +293,6 @@ int main() {
     printf("Initial Stack A:\n");
     print_stack(stack_a);
     print_stack(stack_b);
-    sort_stackb(stack_b);
     tiny_sort(stack_a, stack_b);
     if (is_sorted(stack_a))
 
@@ -307,6 +305,7 @@ int main() {
 
     // Clean up memory (not shown for simplicity)
     free(stack_a);
+    free(stack_b);
 
     return 0;
 }

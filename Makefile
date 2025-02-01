@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC_DIR = src
-SRCS = $(SRC_DIR)/test.c $(SRC_DIR)/main.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/ft_split.c
+SRCS = $(SRC_DIR)/test.c $(SRC_DIR)/inv_rotate.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/ft_split.c $(SRC_DIR)/rotate.c $(SRC_DIR)/swap.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -19,7 +19,7 @@ $(LIBFT):
 $(Printf):
 	$(MAKE) -C $(Printf_DIR)
 $(NAME): $(OBJS) $(LIBFT) $(Printf)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -L$(Printf_DIR) -lft
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -L$(Printf_DIR) -lft -lftprintf
 
 %.o: %.c
 	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(Printf_DIR) -c $< -o $@

@@ -39,7 +39,8 @@ void rra(t_stack* stack_a);
 void rrb(t_stack* stack_b);
 void rrr(t_stack* stack_a, t_stack* stack_b);
 
-
+void startpush(t_stack *stack_a, t_stack *stack_b);
+bool is_sorted_inv(t_stack *stack);
 char **ft_split(char const *s, char c);
 int ft_atoi(const char *str);
 //void radix_sort(t_stack *stack_a);
