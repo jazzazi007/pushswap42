@@ -194,8 +194,9 @@ void set_targets(t_stack *stack_a, t_stack *stack_b)
     }
 }
 
-void find_cheap(t_stack *stack_a, t_stack *stack_b) {
+bool find_cheap(t_stack *stack_a, t_stack *stack_b) {
     if (!stack_a) return; // Check for null stack
+    int i = 0;
 
     t_node *current_a = stack_a->top; // Start from the top of stack A
     t_node *first_node = current_a; // First node in stack A
@@ -246,10 +247,12 @@ void find_cheap(t_stack *stack_a, t_stack *stack_b) {
     if (moves_first <= moves_second) {
         first_node->cheapest = true; // Mark the first node as cheapest
         second_node->cheapest = false; // Mark the second node as not cheapest
+        return true;
         printf("First\n");
     } else {
         first_node->cheapest = false; // Mark the first node as not cheapest
         second_node->cheapest = true; // Mark the second node as cheapest
+        return false;
         printf("Second\n");
     }
 }

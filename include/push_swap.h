@@ -43,6 +43,8 @@ void startpush(t_stack *stack_a, t_stack *stack_b);
 bool is_sorted_inv(t_stack *stack);
 char **ft_split(char const *s, char c);
 int ft_atoi(const char *str);
+int set_targets_nodes(t_node *node_a, t_stack *stack_b);
+bool find_cheap(t_stack *stack_a, t_stack *stack_b);
 //void radix_sort(t_stack *stack_a);
 //int get_max(t_stack *stack);
 #endif

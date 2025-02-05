@@ -55,6 +55,11 @@ void sorted_a(t_stack *stack_a)
 }
 void element_sort(t_stack *stack_a, t_stack *stack_b)
 {
+    t_node *current = stack_a->top;
+    t_node *target = current->target;
+    t_node *next = current->next;
+    t_node *next_target = next->target;
+
     while(!is_sorted_inv(stack_a) || !is_sorted_inv(stack_b))
     {
         if (stack_a->size == 3)
@@ -62,6 +67,26 @@ void element_sort(t_stack *stack_a, t_stack *stack_b)
             sorted_a(stack_a);
             return;
         }
+        else{
+        if (find_cheap(stack_a, stack_b))
+        {
+            set_targets_nodes(stack_a->top, stack_b);
+            while(stack_b->top != stack_a->top->target)
+            {
+                rb(stack_b);
+            }
+            pb(stack_a, stack_b);
+        }
+        else
+        {
+            sa(stack_a);
+            while (stack_b->top != stack_a->top->target)
+            {
+                rrb(stack_b);
+            }
+            pb(stack_a, stack_b);
+        }}
+
 
     }
 }
