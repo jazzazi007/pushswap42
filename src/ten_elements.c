@@ -53,6 +53,20 @@ void sorted_a(t_stack *stack_a)
             printf("Performing sa\n");
         }}   
 }
+void sortback(t_stack *stack_a, t_stack *stack_b)
+{
+    while (stack_b->top)
+    {
+        if (stack_b->top->target == stack_a->top)
+        {
+            pa(stack_a, stack_b);
+        }
+        else
+        {
+            rra(stack_a);
+        }
+    }
+}
 void element_sort(t_stack *stack_a, t_stack *stack_b)
 {
     t_node *current = stack_a->top;
