@@ -275,7 +275,7 @@ void startpush(t_stack *stack_a, t_stack *stack_b)
 
 }
 
-int main(int ac, char **av) {
+/*int main(int ac, char **av) {
     t_stack *stack_a = init_stack();
     t_stack *stack_b = init_stack();
     
@@ -311,4 +311,4 @@ int main(int ac, char **av) {
     free(stack_b);
 
     return 0;
-}
+}*/

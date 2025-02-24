@@ -11,6 +11,7 @@
 
 typedef struct s_node {
     int value;
+    int cost;
     bool cheapest;
     struct s_node *next;
     struct  s_node *prev;

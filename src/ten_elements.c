@@ -117,3 +117,24 @@ void ten_elements(t_stack *stack_a, t_stack *stack_b)
     print_stack(stack_b);
     element_sort(stack_a, stack_b);
 }
+
+int main(int ac, char **av) {
+    t_stack *stack_a = init_stack();
+    t_stack *stack_b = init_stack();
+    
+    // Push three elements onto the stack
+    if (ac < 2) {
+        ft_printf("Usage: %s <number> [number] [number] ...\n", av[0]);
+        return 1;
+    }
+    int i = 1;
+    while (av[i]) {
+        push(stack_a, atoi(av[i]));
+        i++;
+    }
+    print_stack(stack_a);
+    print_stack(stack_b);
+    
+    ten_elements(stack_a, stack_b);
+    return 0;
+}
