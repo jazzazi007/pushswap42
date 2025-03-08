@@ -1,35 +1,5 @@
 #include "../include/push_swap.h"
-void set_targets(t_stack *stack_a, t_stack *stack_b) 
-{
-    if (!stack_a || !stack_b) return; // Check for null stacks
 
-    t_node *current_a = stack_a->top; // Start from the top of stack A
-
-    while (current_a) 
-    {
-        t_node *current_b = stack_b->top; // Start from the top of stack B
-        t_node *next_smaller = NULL; // To hold the next smaller node
-
-        // Find the next smaller number in stack B
-        while (current_b) 
-        {
-            if (current_b->value < current_a->value) {
-                // If we find a smaller number, we set it as the next_smaller
-                if (next_smaller == NULL || current_b->value > next_smaller->value) {
-                    next_smaller = current_b; // Update next_smaller to the current node
-                } 
-            }
-            current_b = current_b->next; // Move to the next node in stack B
-        }
-
-        // Set the target for the current node in stack A
-        current_a->target = next_smaller;
-        printf("Target for %d is %d\n", current_a->value, next_smaller ? next_smaller->value : -1);
-
-        // Move to the next node in stack A
-        current_a = current_a->next;
-    }
-}
 void sorted_a(t_stack *stack_a)
 {
     t_node *first = stack_a->top;
@@ -53,10 +23,74 @@ void sorted_a(t_stack *stack_a)
             printf("Performing sa\n");
         }}   
 }
+int set_targets_nodes_back(t_node *node_b, t_stack *stack_a) {
+    if (!node_b || !stack_a) 
+        return (false);
+
+    t_node *current_a = stack_a->top;
+    t_node *next_larger = NULL;
+    bool found_target = false;
+    while (current_a) {
+        if (current_a->value > node_b->value) {
+            if (next_larger == NULL || current_a->value < next_larger->value) {
+                next_larger = current_a;
+                found_target = true;
+            }
+        }
+        current_a = current_a->next;
+    }
+    node_b->target = next_larger;
+  //  printf("Target for %d is %d\n", node_b->value, next_larger ? next_larger->value : -1);
+
+    return found_target;
+}
+int get_largest_b(t_stack *stack_b) {
+    if (!stack_b || !stack_b->top)
+        return -1;
+
+    t_node *current = stack_b->top;
+    t_node *largest = current;
+
+    while (current) {
+        if (current->value > largest->value)
+            largest = current;
+        current = current->next;
+    }
+    
+    printf("Largest in B: %d\n", largest->value);
+    return largest->value;
+}
+t_node *get_largest_node_b(t_stack *stack_b) {
+    if (!stack_b || !stack_b->top)
+        return NULL;
+
+    t_node *current = stack_b->top;
+    t_node *largest = current;
+
+    while (current) {
+        if (current->value > largest->value)
+            largest = current;
+        current = current->next;
+    }
+    
+    printf("Largest in B: %d\n", largest->value);
+    return largest;
+}
+
 void sortback(t_stack *stack_a, t_stack *stack_b)
 {
+    int i = 0;
     while (stack_b->top)
     {
+        if (stack_b->top->value == get_largest_b(stack_b) && i == 0)
+        {
+            pa(stack_a, stack_b);
+            i++;
+        }
+        set_targets_nodes_back(stack_b->top, stack_a);
+       // ft_printf("stack b vlaue is %i\n", stack_b->top->value);
+        //printf("stack b target is %i\n", stack_b->top->target->value);
+
         if (stack_b->top->target == stack_a->top)
         {
             pa(stack_a, stack_b);
@@ -65,43 +99,155 @@ void sortback(t_stack *stack_a, t_stack *stack_b)
         {
             rra(stack_a);
         }
+        print_stack(stack_a);
+        print_stack(stack_b);
     }
 }
-void element_sort(t_stack *stack_a, t_stack *stack_b)
-{
-    t_node *current = stack_a->top;
-    t_node *target = current->target;
-    t_node *next = current->next;
-    t_node *next_target = next->target;
 
-    while(!is_sorted_inv(stack_a) || !is_sorted_inv(stack_b))
-    {
-        if (stack_a->size == 3)
-        {
-            sorted_a(stack_a);
-            return;
+
+
+bool is_stack_b_sorted(t_stack *stack_b) {
+    if (!stack_b || !stack_b->top || stack_b->size < 2)
+        return true;  // Empty or single element stack is considered sorted
+
+    t_node *current = stack_b->top;
+    while (current && current->next) {
+        if (current->value < current->next->value) {
+           // printf("Stack B is not inverse sorted\n");
+            return false;
         }
-        else{
-        if (find_cheap(stack_a, stack_b))
+        current = current->next;
+    }
+   // printf("Stack B is inverse sorted\n");
+    return true;
+}
+
+void sort_b_inverse(t_stack *stack_b)
+{
+    if (!stack_b || !stack_b->top || stack_b->size < 2)
+        return;
+
+    bool sorted = false;
+    while (!sorted)
+    {
+        sorted = true;
+        t_node *current = stack_b->top;
+        
+        // Check if we need to swap the top two elements
+        if (current && current->next && current->value < current->next->value)
         {
-            set_targets_nodes(stack_a->top, stack_b);
-            while(stack_b->top != stack_a->top->target)
+            sb(stack_b);
+            sorted = false;
+        }
+        
+        // Check if largest value is at bottom and needs to be rotated to top
+        int largest = get_largest_b(stack_b);
+        if (stack_b->top->value < largest)
+        {
+            // Decide between rb and rrb based on position of largest
+            int pos = 0;
+            current = stack_b->top;
+            while (current && current->value != largest)
+            {
+                pos++;
+                current = current->next;
+            }
+            
+            // If largest is closer to top, use rb
+            if (pos <= stack_b->size / 2)
             {
                 rb(stack_b);
             }
-            pb(stack_a, stack_b);
-        }
-        else
-        {
-            sa(stack_a);
-            while (stack_b->top != stack_a->top->target)
+            // If largest is closer to bottom, use rrb
+            else
             {
                 rrb(stack_b);
             }
-            pb(stack_a, stack_b);
-        }}
+            sorted = false;
+        }
+        
+        print_stack(stack_b);
+    }
+}
 
+// Add this helper function to get the position of a target node
+int get_target_position(t_stack *stack_b, t_node *target) {
+    if (!stack_b || !target)
+        return -1;
+    
+    int pos = 0;
+    t_node *current = stack_b->top;
+    
+    while (current) {
+        if (current == target)
+            return pos;
+        pos++;
+        current = current->next;
+    }
+    return -1;
+}
 
+// Modify the element_sort function
+void element_sort(t_stack *stack_a, t_stack *stack_b)
+{
+    while (stack_a->size > 3)
+    {
+        if (find_cheap(stack_a, stack_b))
+        {
+            set_targets_nodes(stack_a->top, stack_b);
+            
+            // Handle sb case
+            if (stack_a->top->target == stack_b->top->next)
+            {
+                pb(stack_a, stack_b);
+                sb(stack_b);
+            }
+            else if (stack_a->top && stack_a->top->target)
+            {
+                // Get position of target in stack_b
+                int target_pos = get_target_position(stack_b, stack_a->top->target);
+                
+                // Choose rotation direction based on position
+                if (target_pos <= stack_b->size / 2)
+                {
+                    // Use rb if target is in upper half
+                    while(stack_b->top != stack_a->top->target)
+                        rb(stack_b);
+                }
+                else
+                {
+                    // Use rrb if target is in lower half
+                    while(stack_b->top != stack_a->top->target)
+                        rrb(stack_b);
+                }
+                pb(stack_a, stack_b);
+            }
+            else
+            {
+                if(set_targets_nodes(stack_a->top, stack_b) == 0)
+                {
+                    if (!is_stack_b_sorted(stack_b))
+                    {
+                        sort_b_inverse(stack_b);
+                    }
+                    pb(stack_a, stack_b);
+                    // After push, decide rotation direction
+                    int largest_pos = get_target_position(stack_b, get_largest_node_b(stack_b));
+                    if (largest_pos <= stack_b->size / 2)
+                        rb(stack_b);
+                    else
+                        rrb(stack_b);
+                }               
+            }
+            print_stack(stack_b);
+        }
+    }
+    if (stack_a->size == 3)
+    {
+        while(stack_b->top->value < get_largest_b(stack_b))
+        rb(stack_b); 
+        sorted_a(stack_a);
+        return;
     }
 }
 
@@ -116,6 +262,12 @@ void ten_elements(t_stack *stack_a, t_stack *stack_b)
     print_stack(stack_a);
     print_stack(stack_b);
     element_sort(stack_a, stack_b);
+    tiny_sort(stack_a, stack_b);
+    print_stack(stack_a);
+    print_stack(stack_b);
+    sortback(stack_a, stack_b);
+
+
 }
 
 int main(int ac, char **av) {

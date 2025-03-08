@@ -40,9 +40,9 @@ bool is_sorted_inv(t_stack *stack) {
     printf("sorted\n");
     return true;
 }
-t_node *get_largest(t_stack *stack_a)
+t_node *get_largest(t_stack *stack)
 {
-    t_node *current = stack_a->top;
+    t_node *current = stack->top;
     t_node *next_ = current->next;
     t_node *largest = current;
     while (current)
@@ -54,26 +54,32 @@ t_node *get_largest(t_stack *stack_a)
     printf("Largest: %d\n", largest->value);
     return largest;
 }
+
 int set_targets_nodes(t_node *node_a, t_stack *stack_b) {
-    if (!node_a || !stack_b) return(false); // Check for null stacks
+    if (!node_a || !stack_b) 
+        return (false); // Check for null inputs
 
-        t_node *current_b = stack_b->top; // Start from the top of stack B
-        t_node *next_smaller = NULL; // To hold the next smaller node
+    t_node *current_b = stack_b->top;
+    t_node *next_smaller = NULL;
+    bool found_target = false;
 
-        // Find the next smaller number in stack B
-        while (current_b) {
-            if (current_b->value < node_a->value) {
-                // If we find a smaller number, we set it as the next_smaller
-                if (next_smaller == NULL || current_b->value > next_smaller->value) {
-                    next_smaller = current_b; // Update next_smaller to the current node
-                }
-                printf("Target for %d is %d\n", node_a->value, next_smaller ? next_smaller->value : -1);
-
-                return true;
+    // Find the next smaller number in stack B
+    while (current_b) {
+        if (current_b->value < node_a->value) {
+            // If we find a smaller number, update next_smaller if it's null or bigger than current
+            if (next_smaller == NULL || current_b->value > next_smaller->value) {
+                next_smaller = current_b;
+                found_target = true;
             }
-            current_b = current_b->next; // Move to the next node in stack B
         }
-        return false;
+        current_b = current_b->next;
+    }
+
+    // Set the target and print result
+    node_a->target = next_smaller;
+    printf("Target for %d is %d\n", node_a->value, next_smaller ? next_smaller->value : -1);
+
+    return found_target;
 }
 
 void tiny_sort(t_stack *stack_a, t_stack *stack_b) {
@@ -194,15 +200,17 @@ void set_targets(t_stack *stack_a, t_stack *stack_b)
     }
 }
 
-bool find_cheap(t_stack *stack_a, t_stack *stack_b) {
-    if (!stack_a) return; // Check for null stack
-    int i = 0;
+int find_cheap(t_stack *stack_a, t_stack *stack_b) {
+    if (!stack_a) 
+        return (-1); // Check for null stack
+   // int i = 0;
 
     t_node *current_a = stack_a->top; // Start from the top of stack A
     t_node *first_node = current_a; // First node in stack A
     t_node *second_node = current_a->next; // Second node in stack A
 
-    if (!second_node) return; // If there is no second node, exit
+    if (!second_node) 
+        return -1; // If there is no second node, exit
 
     // Calculate moves for the first node
     int moves_first = 0;
@@ -218,8 +226,8 @@ bool find_cheap(t_stack *stack_a, t_stack *stack_b) {
         }
         move_first_inv = stack_b->size - moves_first;
     }
-    printf("first %d\n", moves_first);
-    printf("inv first %d\n", move_first_inv);
+    //printf("first %d\n", moves_first);
+    //printf("inv first %d\n", move_first_inv);
 
     // Calculate moves for the second node
     int moves_second = 0;
@@ -237,8 +245,8 @@ bool find_cheap(t_stack *stack_a, t_stack *stack_b) {
         move_second_inv = stack_b->size - moves_second;
         moves_second++;
     }
-    printf("sec %d\n", moves_second);
-    printf("inv second %d\n", move_second_inv);
+   // printf("sec %d\n", moves_second);
+    //printf("inv second %d\n", move_second_inv);
     if (move_first_inv < moves_first)
         moves_first = move_first_inv;
     if (move_second_inv < moves_second)

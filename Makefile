@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC_DIR = src
-SRCS = $(SRC_DIR)/test.c $(SRC_DIR)/inv_rotate.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/ft_split.c $(SRC_DIR)/rotate.c $(SRC_DIR)/swap.c
+SRCS = $(SRC_DIR)/test.c $(SRC_DIR)/inv_rotate.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/ft_split.c $(SRC_DIR)/rotate.c $(SRC_DIR)/swap.c $(SRC_DIR)/ten_elements.c
 
 OBJS = $(SRCS:.c=.o)
 
